@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.cesarbassani.meusconvidados.R;
 import com.cesarbassani.meusconvidados.entities.GuestEntity;
+import com.cesarbassani.meusconvidados.listener.OnGuestListenerInteractionListener;
 
 public class GuestViewHolder extends RecyclerView.ViewHolder{
 
@@ -17,7 +18,15 @@ public class GuestViewHolder extends RecyclerView.ViewHolder{
         this.mTextName = itemView.findViewById(R.id.text_name);
     }
 
-    public void binData(GuestEntity guestEntity) {
-        mTextName.setText(guestEntity.getName());
+    public void binData(final GuestEntity guestEntity, final OnGuestListenerInteractionListener listener) {
+
+        this.mTextName.setText(guestEntity.getName());
+
+        this.mTextName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onListClick(guestEntity.getId());
+            }
+        });
     }
 }
