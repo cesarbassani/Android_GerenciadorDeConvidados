@@ -24,4 +24,8 @@ public class GuestBusiness {
 
         return this.mGuestRerpository.getGuestsByQuery("select * from " + DataBaseConstants.GUEST.TABLE_NAME);
     }
+
+    public GuestEntity load(int id) {
+        return this.mGuestRerpository.load(id);
+    }
 }

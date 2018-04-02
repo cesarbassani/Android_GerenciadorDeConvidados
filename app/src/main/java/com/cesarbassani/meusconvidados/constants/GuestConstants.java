@@ -2,7 +2,9 @@ package com.cesarbassani.meusconvidados.constants;
 
 public class GuestConstants {
 
-    public static final String GUEST_ID = "guestID";
+    public static class BundleConstants {
+        public static final String GUEST_ID = "guestID";
+    }
 
     public static class CONFIRMATION {
         public static final int NOT_CONFIRMED = 1;

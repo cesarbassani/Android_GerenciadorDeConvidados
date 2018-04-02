@@ -47,7 +47,7 @@ public class AllInvitedFragment extends Fragment {
             public void onListClick(int id) {
                 //Abrir activity de formulario
                 Bundle bundle = new Bundle();
-                bundle.putInt(GuestConstants.GUEST_ID, id);
+                bundle.putInt(GuestConstants.BundleConstants.GUEST_ID, id);
 
                 Intent intent = new Intent(context, GuestFormActivity.class);
                 intent.putExtras(bundle);
