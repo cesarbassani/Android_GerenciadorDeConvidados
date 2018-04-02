@@ -7,9 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cesarbassani.meusconvidados.R;
+import com.cesarbassani.meusconvidados.entities.GuestEntity;
 import com.cesarbassani.meusconvidados.viewholder.GuestViewHolder;
 
+import java.util.List;
+
 public class GuestListAdapter extends RecyclerView.Adapter<GuestViewHolder> {
+
+    private List<GuestEntity> mGuestEntityList;
+
+    public GuestListAdapter(List<GuestEntity> guestEntityList) {
+
+        this.mGuestEntityList = guestEntityList;
+    }
 
     @Override
     public GuestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -17,19 +27,21 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestViewHolder> {
         Context context = parent.getContext();
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View carView = layoutInflater.inflate(R.layout.row_guest_list, parent, false) ;
+        View guestView = layoutInflater.inflate(R.layout.row_guest_list, parent, false) ;
 
-        return new GuestViewHolder(carView);
+        return new GuestViewHolder(guestView);
 
     }
 
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
-
+        //Entidade convidado
+        GuestEntity guestEntity = this.mGuestEntityList.get(position);
+        holder.binData(guestEntity);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.mGuestEntityList.size();
     }
 }
