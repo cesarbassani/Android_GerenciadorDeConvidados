@@ -22,7 +22,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest_form);
 
-        this.mViewHolder.mEditText = findViewById(R.id.edit_name);
+        this.mViewHolder.mEditName = findViewById(R.id.edit_name);
         this.mViewHolder.mRadioNotConfirmed = findViewById(R.id.radio_not_confirmed);
         this.mViewHolder.mRadioPresent = findViewById(R.id.radio_present);
         this.mViewHolder.mRadioAbsent = findViewById(R.id.radio_absent);
@@ -48,8 +48,12 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void handleSave() {
+
+        if (!this.validateSave()) {
+
+        }
         GuestEntity guestEntity = new GuestEntity();
-        guestEntity.setName(this.mViewHolder.mEditText.getText().toString());
+        guestEntity.setName(this.mViewHolder.mEditName.getText().toString());
 
         if (this.mViewHolder.mRadioNotConfirmed.isChecked()) {
             guestEntity.setConfirmed(GuestConstants.CONFIRMATION.NOT_CONFIRMED);
@@ -62,10 +66,20 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         //Salva entidade convidado no BD
         this.mGuestBusiness.insert(guestEntity);
 
+        finish();
+
+    }
+
+    private boolean validateSave() {
+        if (this.mViewHolder.mEditName.getText().toString().equals("")) {
+            this.mViewHolder.mEditName.setError(getString(R.string.nome_obrigatorio));
+            return false;
+        }
+        return true;
     }
 
     private static class ViewHolder {
-        EditText mEditText;
+        EditText mEditName;
         RadioButton mRadioNotConfirmed;
         RadioButton mRadioPresent;
         RadioButton mRadioAbsent;
