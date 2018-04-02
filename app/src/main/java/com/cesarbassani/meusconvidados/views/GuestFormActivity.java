@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.cesarbassani.meusconvidados.R;
 import com.cesarbassani.meusconvidados.business.GuestBusiness;
@@ -64,7 +65,11 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         }
 
         //Salva entidade convidado no BD
-        this.mGuestBusiness.insert(guestEntity);
+        if (this.mGuestBusiness.insert(guestEntity)) {
+            Toast.makeText(this, R.string.salvo_com_sucesso, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.erro_ao_salvar, Toast.LENGTH_SHORT).show();
+        }
 
         finish();
 
