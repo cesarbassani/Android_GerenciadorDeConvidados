@@ -18,7 +18,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
     private ViewHolder mViewHolder = new ViewHolder();
     private GuestBusiness mGuestBusiness;
 
-    private int mGuestID;
+    private int mGuestID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
     private void handleSave() {
 
         if (!this.validateSave()) {
-
+            return;
         }
         GuestEntity guestEntity = new GuestEntity();
         guestEntity.setName(this.mViewHolder.mEditName.getText().toString());
@@ -86,11 +86,23 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
             guestEntity.setConfirmed(GuestConstants.CONFIRMATION.ABSENT);
         }
 
-        //Salva entidade convidado no BD
-        if (this.mGuestBusiness.insert(guestEntity)) {
-            Toast.makeText(this, R.string.salvo_com_sucesso, Toast.LENGTH_LONG).show();
+        if (this.mGuestID == 0) {
+            //Salva entidade convidado no BD
+            if (this.mGuestBusiness.insert(guestEntity)) {
+                Toast.makeText(this, R.string.salvo_com_sucesso, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, R.string.erro_ao_salvar, Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, R.string.erro_ao_salvar, Toast.LENGTH_SHORT).show();
+
+            guestEntity.setId(this.mGuestID);
+
+            //Edita a entidade convidado no BD
+            if (this.mGuestBusiness.update(guestEntity)) {
+                Toast.makeText(this, R.string.salvo_com_sucesso, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, R.string.erro_ao_salvar, Toast.LENGTH_SHORT).show();
+            }
         }
 
         finish();
