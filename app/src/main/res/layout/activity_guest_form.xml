@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp "
     tools:context="com.cesarbassani.meusconvidados.views.GuestFormActivity">
 
     <TextView
@@ -14,6 +15,16 @@
     
     <EditText
         android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/documento"/>
+
+    <EditText
+        android:id="@+id/edit_document"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
