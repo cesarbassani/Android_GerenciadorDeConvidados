@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cesarbassani.meusconvidados.constants.DataBaseConstants;
 import com.cesarbassani.meusconvidados.constants.GuestConstants;
+import com.cesarbassani.meusconvidados.entities.GuestCount;
 import com.cesarbassani.meusconvidados.entities.GuestEntity;
 import com.cesarbassani.meusconvidados.repository.GuestRerpository;
 
@@ -21,8 +22,12 @@ public class GuestBusiness {
         return this.mGuestRerpository.insert(guestEntity);
     }
 
-    public boolean update(GuestEntity guestEntity) {
+    public Boolean update(GuestEntity guestEntity) {
         return this.mGuestRerpository.update(guestEntity);
+    }
+
+    public Boolean remove(int id) {
+        return this.mGuestRerpository.remove(id);
     }
 
     public List<GuestEntity> getInvited() {
@@ -44,5 +49,9 @@ public class GuestBusiness {
 
     public GuestEntity load(int id) {
         return this.mGuestRerpository.load(id);
+    }
+
+    public GuestCount loadDashboard() {
+        return this.mGuestRerpository.loadDashboard();
     }
 }

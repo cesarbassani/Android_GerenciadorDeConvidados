@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cesarbassani.meusconvidados.R;
 import com.cesarbassani.meusconvidados.adapter.GuestListAdapter;
 import com.cesarbassani.meusconvidados.business.GuestBusiness;
 import com.cesarbassani.meusconvidados.constants.GuestConstants;
+import com.cesarbassani.meusconvidados.entities.GuestCount;
 import com.cesarbassani.meusconvidados.entities.GuestEntity;
 import com.cesarbassani.meusconvidados.listener.OnGuestListenerInteractionListener;
 
@@ -23,6 +25,7 @@ public class AllInvitedFragment extends Fragment {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private GuestBusiness mGuestBusiness;
+    private OnGuestListenerInteractionListener mOnGuestListenerInteractionListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,10 +42,13 @@ public class AllInvitedFragment extends Fragment {
 
         //Obter a RecyclerView
         this.mViewHolder.mRecyclerViewAllInvited = view.findViewById(R.id.recycler_all_invited);
+        this.mViewHolder.mTextPresentCount = view.findViewById(R.id.text_present_count);
+        this.mViewHolder.mTextAbsentCount = view.findViewById(R.id.text_absent_count);
+        this.mViewHolder.mTextAllInvitedCount = view.findViewById(R.id.text_all_invited);
 
         this.mGuestBusiness = new GuestBusiness(context);
 
-        OnGuestListenerInteractionListener listener = new OnGuestListenerInteractionListener() {
+        this.mOnGuestListenerInteractionListener = new OnGuestListenerInteractionListener() {
             @Override
             public void onListClick(int id) {
                 //Abrir activity de formulario
@@ -56,16 +62,10 @@ public class AllInvitedFragment extends Fragment {
             }
 
             @Override
-            public void onDeleteClick() {
-
+            public void onDeleteClick(int id) {
+                mGuestBusiness.remove(id);
             }
         };
-
-        List<GuestEntity> guestEntityList = this.mGuestBusiness.getInvited();
-
-        //Definir um adapter
-        GuestListAdapter guestListAdapter = new GuestListAdapter(guestEntityList, listener);
-        this.mViewHolder.mRecyclerViewAllInvited.setAdapter(guestListAdapter);
 
         //Definir um layout
         this.mViewHolder.mRecyclerViewAllInvited.setLayoutManager(new LinearLayoutManager(context));
@@ -73,7 +73,38 @@ public class AllInvitedFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        this.loadDashboard();
+
+        this.loadGuests();
+    }
+
+    private void loadGuests() {
+        List<GuestEntity> guestEntityList = this.mGuestBusiness.getInvited();
+
+        //Definir um adapter
+        GuestListAdapter guestListAdapter = new GuestListAdapter(guestEntityList, this.mOnGuestListenerInteractionListener);
+        this.mViewHolder.mRecyclerViewAllInvited.setAdapter(guestListAdapter);
+
+        guestListAdapter.notifyDataSetChanged();
+    }
+
+    private void loadDashboard() {
+
+        GuestCount guestCount = this.mGuestBusiness.loadDashboard();
+
+        this.mViewHolder.mTextAllInvitedCount.setText(String.valueOf(guestCount.getAllInvitedCount()));
+        this.mViewHolder.mTextPresentCount.setText(String.valueOf(guestCount.getPresentCount()));
+        this.mViewHolder.mTextAbsentCount.setText(String.valueOf(guestCount.getAbsentCount()));
+    }
+
     private static class ViewHolder {
         RecyclerView mRecyclerViewAllInvited;
+        TextView mTextPresentCount;
+        TextView mTextAbsentCount;
+        TextView mTextAllInvitedCount;
     }
 }

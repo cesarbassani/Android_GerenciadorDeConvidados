@@ -4,5 +4,5 @@ public interface OnGuestListenerInteractionListener {
 
     void onListClick(int id);
 
-    void onDeleteClick();
+    void onDeleteClick(int id);
 }
