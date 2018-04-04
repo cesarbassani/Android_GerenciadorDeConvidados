@@ -26,4 +26,6 @@
     <string name="total">Total</string>
     <string name="convidado_removido_sucesso">Convidado removido com sucesso!</string>
     <string name="documento">Documento</string>
+    <string name="gerenciamento_de_convidados">Gerenciamento de convidados</string>
+    <string name="confirmacao">Confirmação</string>
 </resources>
