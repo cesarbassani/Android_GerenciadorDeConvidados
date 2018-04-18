@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "923281871362",
+    "firebase_url": "https://meus-convidados-fe37d.firebaseio.com",
+    "project_id": "meus-convidados-fe37d",
+    "storage_bucket": "meus-convidados-fe37d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923281871362:android:720c873bd73e83a3",
+        "android_client_info": {
+          "package_name": "com.cesarbassani.meusconvidados"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923281871362-if1j4s3n9utb4aeqmk4mnfr9fcovs5em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEyWmthKGakIWR9kjtsDLCdLG3Z1um5Lw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

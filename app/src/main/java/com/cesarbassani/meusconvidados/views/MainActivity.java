@@ -14,17 +14,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cesarbassani.meusconvidados.R;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private ViewHolder mViewHolder = new ViewHolder();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         this.mViewHolder.mFloatAddGuest = findViewById(R.id.float_add_guest);
 
@@ -43,6 +51,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.setListeners();
 
         this.startDefaultFragment();
+
+        Button crashButton = new Button(this);
+        crashButton.setText("Crash!");
+        crashButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Crashlytics.getInstance().crash(); // Force a crash
+            }
+        });
+        addContentView(crashButton,
+                new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void setListeners() {
@@ -108,10 +127,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_all_guests) {
             fragmentClass = AllInvitedFragment.class;
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "all_invited_id");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "all_invited");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "menu_click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+            bundle = new Bundle();
+            bundle.putString("menu_content", "all_invited");
+            mFirebaseAnalytics.logEvent("menu_content_custon", bundle);
+
+
         } else if (id == R.id.nav_present) {
             fragmentClass = PresentFragment.class;
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "present_id");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "present");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "menu_click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+            bundle = new Bundle();
+            bundle.putString("menu_content", "present");
+            mFirebaseAnalytics.logEvent("menu_content_custon", bundle);
+
         } else if (id == R.id.nav_absent) {
             fragmentClass = AbsentFragment.class;
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "absent_id");
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "absent");
+            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "menu_click");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+            bundle = new Bundle();
+            bundle.putString("menu_content", "absent");
+            mFirebaseAnalytics.logEvent("menu_content_custon", bundle);
         }
 
         try {
